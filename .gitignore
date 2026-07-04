@@ -43,3 +43,6 @@ workbox-*.js
 
 # Uploads (runtime user content)
 server/uploads/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
