@@ -42,7 +42,7 @@ export function HomeScreen() {
           <Text className="text-xl font-bold text-foreground">
             Sed<Text className="text-brand-500">_</Text>Ecomm
           </Text>
-          <Pressable onPress={() => nav.navigate('Search')} className="rounded-full border border-white/10 bg-white/[0.06] p-2.5">
+          <Pressable onPress={() => nav.navigate('Search')} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2.5">
             <Ionicons name="search" size={18} color="#94A3B8" />
           </Pressable>
         </View>
@@ -73,7 +73,7 @@ export function HomeScreen() {
               renderItem={({ item }) => (
                 <Pressable
                   onPress={() => nav.navigate('MainTabs', { screen: 'Shop', params: { category: item.slug } } as never)}
-                  className="w-20 items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.06] p-3"
+                  className="w-20 items-center gap-2 rounded-2xl border border-glass-border/10 bg-glass/[0.06] p-3"
                 >
                   <ProductImage uri={item.image} className="h-12 w-12 rounded-full" style={{ width: 48, height: 48, borderRadius: 24 }} />
                   <Text numberOfLines={1} className="text-xs text-secondary">{pi.category(item.name)}</Text>

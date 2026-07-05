@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import type { TabParamList } from './types';
-import { colors } from '@/constants/theme';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { useUiStore } from '@/store/uiStore';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { ProductsScreen } from '@/screens/ProductsScreen';
@@ -24,6 +24,7 @@ function Badge({ count }: { count: number }) {
 
 export function TabNavigator() {
   const { t } = useTranslation();
+  const colors = useThemeColors();
   const cartCount = useUiStore((s) => s.cartCount);
   const wishlistCount = useUiStore((s) => s.wishlistCount);
 
@@ -34,7 +35,7 @@ export function TabNavigator() {
         tabBarActiveTintColor: colors.brand,
         tabBarInactiveTintColor: colors.muted,
         tabBarStyle: {
-          backgroundColor: 'rgba(11,17,32,0.92)',
+          backgroundColor: colors.surface,
           borderTopColor: colors.border,
           height: 62,
           paddingBottom: 8,

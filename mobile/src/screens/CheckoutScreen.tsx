@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { GradientBackground } from '@/components/GradientBackground';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { TextField } from '@/components/TextField';
 import { Button } from '@/components/Button';
 import { useAddresses, useAddAddress } from '@/hooks/useOrders';
@@ -18,6 +19,7 @@ const EMPTY = { fullName: '', phone: '', line1: '', city: '', state: '', postalC
 
 export function CheckoutScreen() {
   const insets = useSafeAreaInsets();
+  const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: addresses, isLoading } = useAddresses();
   const { data: cart } = useCart();
@@ -43,8 +45,8 @@ export function CheckoutScreen() {
   return (
     <GradientBackground>
       <View style={{ paddingTop: insets.top }} className="flex-row items-center gap-3 px-4 py-2">
-        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-white/10 bg-white/[0.06] p-2">
-          <Ionicons name="chevron-back" size={20} color="#fff" />
+        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2">
+          <Ionicons name="chevron-back" size={20} color={tc.foreground} />
         </Pressable>
         <Text className="text-xl font-bold text-foreground">Checkout</Text>
       </View>
@@ -58,7 +60,7 @@ export function CheckoutScreen() {
             <Pressable
               key={a.id}
               onPress={() => setSelected(a.id)}
-              className={`rounded-2xl border p-3 ${addressId === a.id ? 'border-brand-500 bg-brand-500/10' : 'border-white/10 bg-white/[0.06]'}`}
+              className={`rounded-2xl border p-3 ${addressId === a.id ? 'border-brand-500 bg-brand-500/10' : 'border-glass-border/10 bg-glass/[0.06]'}`}
             >
               <Text className="font-medium text-foreground">{a.fullName}</Text>
               <Text className="text-sm text-muted-foreground">
@@ -70,7 +72,7 @@ export function CheckoutScreen() {
         )}
 
         {showForm ? (
-          <View className="gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-3">
+          <View className="gap-3 rounded-2xl border border-glass-border/10 bg-glass/[0.06] p-3">
             <TextField label="Full name" value={form.fullName} onChangeText={set('fullName')} />
             <TextField label="Phone" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" />
             <TextField label="Address" value={form.line1} onChangeText={set('line1')} />
@@ -88,18 +90,18 @@ export function CheckoutScreen() {
         )}
 
         {cart && (
-          <View className="mt-2 rounded-2xl border border-white/10 bg-white/[0.06] p-4">
+          <View className="mt-2 rounded-2xl border border-glass-border/10 bg-glass/[0.06] p-4">
             <Text className="mb-2 font-semibold text-foreground">Order summary</Text>
             <View className="flex-row justify-between py-0.5"><Text className="text-muted-foreground">Subtotal</Text><Text className="text-secondary">{formatPrice(cart.subtotal)}</Text></View>
             {!!cart.discount && <View className="flex-row justify-between py-0.5"><Text className="text-emerald">Discount</Text><Text className="text-emerald">-{formatPrice(cart.discount)}</Text></View>}
             <View className="flex-row justify-between py-0.5"><Text className="text-muted-foreground">Tax</Text><Text className="text-secondary">{formatPrice(cart.tax ?? 0)}</Text></View>
             <View className="flex-row justify-between py-0.5"><Text className="text-muted-foreground">Shipping</Text><Text className="text-secondary">{cart.shippingFee ? formatPrice(cart.shippingFee) : 'Free'}</Text></View>
-            <View className="mt-1 flex-row justify-between border-t border-white/10 pt-2"><Text className="font-bold text-foreground">Total</Text><Text className="font-bold text-foreground">{formatPrice(cart.total)}</Text></View>
+            <View className="mt-1 flex-row justify-between border-t border-glass-border/10 pt-2"><Text className="font-bold text-foreground">Total</Text><Text className="font-bold text-foreground">{formatPrice(cart.total)}</Text></View>
           </View>
         )}
       </ScrollView>
 
-      <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-surface/95 px-4 pt-3">
+      <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-glass-border/10 bg-surface/95 px-4 pt-3">
         <Button
           onPress={() => addressId && nav.navigate('Payment', { addressId, couponCode: cart?.couponCode })}
           disabled={!addressId}

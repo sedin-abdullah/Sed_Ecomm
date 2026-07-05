@@ -28,7 +28,7 @@ export function ProductsScreen() {
       <View style={{ paddingTop: insets.top + 8 }} className="flex-1">
         <View className="flex-row items-center justify-between px-4 pb-2">
           <Text className="text-2xl font-bold text-foreground">Shop</Text>
-          <Pressable onPress={() => nav.navigate('Search')} className="rounded-full border border-white/10 bg-white/[0.06] p-2.5">
+          <Pressable onPress={() => nav.navigate('Search')} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2.5">
             <Ionicons name="search" size={18} color={colors.muted} />
           </Pressable>
         </View>
@@ -46,7 +46,7 @@ export function ProductsScreen() {
             return (
               <Pressable
                 onPress={() => setFilters((f) => ({ ...f, category: item.slug }))}
-                className={`h-9 justify-center rounded-full border px-4 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-white/10 bg-white/[0.06]'}`}
+                className={`h-9 justify-center rounded-full border px-4 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10 bg-glass/[0.06]'}`}
               >
                 <Text className={active ? 'text-sm font-medium text-brand-400' : 'text-sm text-secondary'}>
                   {item.slug ? pi.category(item.name) : item.name}

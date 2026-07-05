@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 export function GlassCard({ children, className = '', ...props }: ViewProps & { children: ReactNode; className?: string }) {
   return (
     <View
-      className={`rounded-3xl border border-white/10 bg-white/[0.06] ${className}`}
+      className={`rounded-3xl border border-glass-border/10 bg-glass/[0.06] ${className}`}
       {...props}
     >
       {children}

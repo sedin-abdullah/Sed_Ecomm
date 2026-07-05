@@ -8,6 +8,11 @@ import { CheckoutScreen } from '@/screens/CheckoutScreen';
 import { PaymentScreen } from '@/screens/PaymentScreen';
 import { OrdersScreen } from '@/screens/OrdersScreen';
 import { OrderDetailScreen } from '@/screens/OrderDetailScreen';
+import { AdminDashboardScreen } from '@/screens/admin/AdminDashboardScreen';
+import { AdminProductsScreen } from '@/screens/admin/AdminProductsScreen';
+import { AdminOrdersScreen } from '@/screens/admin/AdminOrdersScreen';
+import { AdminCouponsScreen } from '@/screens/admin/AdminCouponsScreen';
+import { AdminCustomersScreen } from '@/screens/admin/AdminCustomersScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -32,6 +37,11 @@ export function RootNavigator() {
       <Stack.Screen name="Payment" component={PaymentScreen} />
       <Stack.Screen name="Orders" component={OrdersScreen} />
       <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
+      <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
+      <Stack.Screen name="AdminProducts" component={AdminProductsScreen} />
+      <Stack.Screen name="AdminOrders" component={AdminOrdersScreen} />
+      <Stack.Screen name="AdminCoupons" component={AdminCouponsScreen} />
+      <Stack.Screen name="AdminCustomers" component={AdminCustomersScreen} />
       <Stack.Screen name="Auth" component={AuthNavigator} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
     </Stack.Navigator>
   );

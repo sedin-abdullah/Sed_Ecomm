@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import Animated, { ZoomIn } from 'react-native-reanimated';
 import { GradientBackground } from '@/components/GradientBackground';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { TextField } from '@/components/TextField';
 import { Button } from '@/components/Button';
 import { usePlaceOrder } from '@/hooks/useOrders';
@@ -30,6 +31,7 @@ type Stage = 'form' | 'otp' | 'success';
 
 export function PaymentScreen() {
   const insets = useSafeAreaInsets();
+  const tc = useThemeColors();
   const { t } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { params } = useRoute<RouteProp<RootStackParamList, 'Payment'>>();
@@ -101,8 +103,8 @@ export function PaymentScreen() {
   return (
     <GradientBackground>
       <View style={{ paddingTop: insets.top }} className="flex-row items-center gap-3 px-4 py-2">
-        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-white/10 bg-white/[0.06] p-2">
-          <Ionicons name="chevron-back" size={20} color="#fff" />
+        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2">
+          <Ionicons name="chevron-back" size={20} color={tc.foreground} />
         </Pressable>
         <Text className="text-xl font-bold text-foreground">{stage === 'otp' ? t('payment.success') : 'Payment'}</Text>
       </View>
@@ -117,7 +119,7 @@ export function PaymentScreen() {
                   key={m.key}
                   onPress={() => setMethod(m.key)}
                   style={{ width: '31%' }}
-                  className={`items-center gap-1 rounded-2xl border p-3 ${method === m.key ? 'border-brand-500 bg-brand-500/15' : 'border-white/10 bg-white/[0.06]'}`}
+                  className={`items-center gap-1 rounded-2xl border p-3 ${method === m.key ? 'border-brand-500 bg-brand-500/15' : 'border-glass-border/10 bg-glass/[0.06]'}`}
                 >
                   <Ionicons name={m.icon} size={22} color={method === m.key ? colors.brand : colors.muted} />
                   <Text className={`text-center text-[11px] ${method === m.key ? 'text-brand-400' : 'text-muted-foreground'}`}>{m.label}</Text>

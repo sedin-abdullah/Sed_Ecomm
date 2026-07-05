@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { GradientBackground } from '@/components/GradientBackground';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { ProductImage } from '@/components/ProductImage';
 import { Button } from '@/components/Button';
 import { useOrder, useOrderTracking, useCancelOrder } from '@/hooks/useOrders';
@@ -14,6 +15,7 @@ import type { OrderItem } from '@/types';
 
 export function OrderDetailScreen() {
   const insets = useSafeAreaInsets();
+  const tc = useThemeColors();
   const nav = useNavigation();
   const { params } = useRoute<RouteProp<RootStackParamList, 'OrderDetail'>>();
   const pi = useProductI18n();
@@ -34,15 +36,15 @@ export function OrderDetailScreen() {
   return (
     <GradientBackground>
       <View style={{ paddingTop: insets.top }} className="flex-row items-center gap-3 px-4 py-2">
-        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-white/10 bg-white/[0.06] p-2">
-          <Ionicons name="chevron-back" size={20} color="#fff" />
+        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2">
+          <Ionicons name="chevron-back" size={20} color={tc.foreground} />
         </Pressable>
         <Text className="text-xl font-bold text-foreground">Order #{order.id.slice(-8).toUpperCase()}</Text>
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16, paddingBottom: 40 }}>
         {/* Status timeline */}
-        <View className="rounded-3xl border border-white/10 bg-white/[0.06] p-4">
+        <View className="rounded-3xl border border-glass-border/10 bg-glass/[0.06] p-4">
           <Text className="mb-3 font-semibold text-foreground">Tracking</Text>
           {(tracking ?? []).map((ev: { status: string; label: string; timestamp: string }, i: number) => (
             <View key={i} className="flex-row items-start gap-3 pb-3">
@@ -56,7 +58,7 @@ export function OrderDetailScreen() {
         </View>
 
         {/* Items */}
-        <View className="rounded-3xl border border-white/10 bg-white/[0.06] p-4">
+        <View className="rounded-3xl border border-glass-border/10 bg-glass/[0.06] p-4">
           <Text className="mb-3 font-semibold text-foreground">Items</Text>
           {order.items.map((item: OrderItem) => (
             <View key={item.id} className="flex-row items-center gap-3 py-2">
@@ -68,7 +70,7 @@ export function OrderDetailScreen() {
               <Text className="font-medium text-foreground">{formatPrice(item.price * item.qty)}</Text>
             </View>
           ))}
-          <View className="mt-2 flex-row justify-between border-t border-white/10 pt-2">
+          <View className="mt-2 flex-row justify-between border-t border-glass-border/10 pt-2">
             <Text className="font-bold text-foreground">Total</Text>
             <Text className="font-bold text-foreground">{formatPrice(order.total)}</Text>
           </View>

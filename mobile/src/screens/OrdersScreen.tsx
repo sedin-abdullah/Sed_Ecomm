@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { GradientBackground } from '@/components/GradientBackground';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { useOrders } from '@/hooks/useOrders';
 import { formatPrice } from '@/utils/format';
 import { colors } from '@/constants/theme';
@@ -21,14 +22,15 @@ const STATUS_COLOR: Record<string, string> = {
 
 export function OrdersScreen() {
   const insets = useSafeAreaInsets();
+  const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: orders, isLoading } = useOrders();
 
   return (
     <GradientBackground>
       <View style={{ paddingTop: insets.top }} className="flex-row items-center gap-3 px-4 py-2">
-        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-white/10 bg-white/[0.06] p-2">
-          <Ionicons name="chevron-back" size={20} color="#fff" />
+        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2">
+          <Ionicons name="chevron-back" size={20} color={tc.foreground} />
         </Pressable>
         <Text className="text-xl font-bold text-foreground">My Orders</Text>
       </View>
@@ -44,7 +46,7 @@ export function OrdersScreen() {
           renderItem={({ item }) => (
             <Pressable
               onPress={() => nav.navigate('OrderDetail', { id: item.id })}
-              className="flex-row items-center justify-between rounded-3xl border border-white/10 bg-white/[0.06] p-4"
+              className="flex-row items-center justify-between rounded-3xl border border-glass-border/10 bg-glass/[0.06] p-4"
             >
               <View>
                 <Text className="font-medium text-foreground">#{item.id.slice(-8).toUpperCase()}</Text>

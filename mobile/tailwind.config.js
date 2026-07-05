@@ -4,16 +4,21 @@
 module.exports = {
   content: ['./App.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: '#030712',
-        surface: '#0B1120',
-        'surface-2': '#111827',
-        border: '#1F2937',
-        foreground: '#FFFFFF',
-        'muted-foreground': '#94A3B8',
-        secondary: '#CBD5E1',
+        // Semantic tokens resolve to CSS variables (global.css) so they flip
+        // between light & dark when NativeWind toggles the `dark` class.
+        background: 'rgb(var(--background) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        'surface-2': 'rgb(var(--surface-2) / <alpha-value>)',
+        border: 'rgb(var(--border) / <alpha-value>)',
+        foreground: 'rgb(var(--foreground) / <alpha-value>)',
+        'muted-foreground': 'rgb(var(--muted-foreground) / <alpha-value>)',
+        secondary: 'rgb(var(--secondary) / <alpha-value>)',
+        glass: 'rgb(var(--glass) / <alpha-value>)',
+        'glass-border': 'rgb(var(--glass-border) / <alpha-value>)',
         brand: {
           400: '#818CF8',
           500: '#6366F1',

@@ -9,6 +9,11 @@ export type RootStackParamList = {
   Orders: undefined;
   OrderDetail: { id: string };
   Auth: { screen?: keyof AuthStackParamList } | undefined;
+  AdminDashboard: undefined;
+  AdminProducts: undefined;
+  AdminOrders: undefined;
+  AdminCoupons: undefined;
+  AdminCustomers: undefined;
 };
 
 export type TabParamList = {

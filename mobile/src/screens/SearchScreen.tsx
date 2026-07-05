@@ -28,7 +28,7 @@ export function SearchScreen() {
     <GradientBackground>
       <View style={{ paddingTop: insets.top + 8 }} className="flex-1 px-4">
         <View className="flex-row items-center gap-2">
-          <View className="h-12 flex-1 flex-row items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.06] px-3">
+          <View className="h-12 flex-1 flex-row items-center gap-2 rounded-2xl border border-glass-border/10 bg-glass/[0.06] px-3">
             <Ionicons name="search" size={18} color={colors.muted} />
             <TextInput
               autoFocus
@@ -49,7 +49,7 @@ export function SearchScreen() {
             <Text className="mb-3 font-semibold text-foreground">Trending searches</Text>
             <View className="flex-row flex-wrap gap-2">
               {TRENDING.map((term) => (
-                <Pressable key={term} onPress={() => setQ(term)} className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2">
+                <Pressable key={term} onPress={() => setQ(term)} className="rounded-full border border-glass-border/10 bg-glass/[0.06] px-4 py-2">
                   <Text className="text-secondary">{term}</Text>
                 </Pressable>
               ))}
@@ -65,7 +65,7 @@ export function SearchScreen() {
             renderItem={({ item }) => (
               <Pressable
                 onPress={() => nav.replace('ProductDetail', { slug: item.slug })}
-                className="flex-row items-center gap-3 border-b border-white/5 py-3"
+                className="flex-row items-center gap-3 border-b border-glass-border/5 py-3"
               >
                 <ProductImage uri={item.image} className="h-10 w-10 rounded-lg" style={{ width: 40, height: 40, borderRadius: 8 }} />
                 <Text className="text-foreground">{pi.rawName(item.name)}</Text>

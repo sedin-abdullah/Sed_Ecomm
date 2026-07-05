@@ -85,13 +85,13 @@ export function CartScreen() {
           renderItem={({ item }) => {
             const unit = item.product.discountPrice ?? item.product.price;
             return (
-              <View className="flex-row gap-3 rounded-3xl border border-white/10 bg-white/[0.06] p-3">
+              <View className="flex-row gap-3 rounded-3xl border border-glass-border/10 bg-glass/[0.06] p-3">
                 <ProductImage uri={item.product.images?.[0]?.url} className="h-20 w-20 rounded-2xl" style={{ width: 80, height: 80, borderRadius: 16 }} />
                 <View className="flex-1">
                   <Text numberOfLines={1} className="font-medium text-foreground">{pi.name(item.product)}</Text>
                   <Text className="mt-0.5 font-bold text-foreground">{formatPrice(unit * item.qty)}</Text>
                   <View className="mt-2 flex-row items-center gap-3">
-                    <View className="flex-row items-center rounded-full border border-white/10">
+                    <View className="flex-row items-center rounded-full border border-glass-border/10">
                       <Pressable onPress={() => item.qty > 1 && updateItem.mutate({ itemId: item.id, qty: item.qty - 1 })} className="px-3 py-1">
                         <Text className="text-lg text-foreground">−</Text>
                       </Pressable>
@@ -114,9 +114,9 @@ export function CartScreen() {
         />
 
         {/* Summary */}
-        <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-surface/95 px-4 pt-3">
+        <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-glass-border/10 bg-surface/95 px-4 pt-3">
           <View className="mb-2 flex-row gap-2">
-            <View className="h-11 flex-1 justify-center rounded-2xl border border-white/10 bg-white/[0.06] px-3">
+            <View className="h-11 flex-1 justify-center rounded-2xl border border-glass-border/10 bg-glass/[0.06] px-3">
               <TextInput
                 value={coupon}
                 onChangeText={(v) => setCoupon(v.toUpperCase())}
@@ -128,9 +128,9 @@ export function CartScreen() {
             </View>
             <Pressable
               onPress={() => applyCoupon.mutate(coupon)}
-              className="h-11 justify-center rounded-2xl border border-white/10 bg-white/[0.06] px-5"
+              className="h-11 justify-center rounded-2xl border border-glass-border/10 bg-glass/[0.06] px-5"
             >
-              <Text className="font-medium text-brand-400">{t('common.apply')}</Text>
+              <Text className="font-medium text-brand-400">{t('cart.applyCoupon')}</Text>
             </Pressable>
           </View>
 
@@ -148,7 +148,7 @@ export function CartScreen() {
           )}
           <Row label={`${t('cart.tax')} (8%)`} value={formatPrice(cart.tax ?? 0)} />
           <Row label={t('cart.shipping')} value={cart.shippingFee ? formatPrice(cart.shippingFee) : 'Free'} />
-          <View className="mt-1 flex-row justify-between border-t border-white/10 pt-2">
+          <View className="mt-1 flex-row justify-between border-t border-glass-border/10 pt-2">
             <Text className="text-base font-bold text-foreground">{t('cart.total')}</Text>
             <Text className="text-base font-bold text-foreground">{formatPrice(cart.total)}</Text>
           </View>

@@ -20,7 +20,7 @@ export function ProductCard({ product, onPress, index = 0, width }: Props) {
 
   return (
     <Animated.View entering={FadeInDown.delay(Math.min(index * 40, 300)).springify()} style={width ? { width } : undefined}>
-      <Pressable onPress={onPress} className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06]">
+      <Pressable onPress={onPress} className="overflow-hidden rounded-3xl border border-glass-border/10 bg-glass/[0.06]">
         <View className="relative aspect-square w-full">
           <ProductImage uri={product.images?.[0]?.url} className="h-full w-full" style={{ width: '100%', height: '100%' }} />
           {hasDiscount && (

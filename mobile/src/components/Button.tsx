@@ -40,7 +40,7 @@ export function Button({ onPress, children, variant = 'primary', loading, disabl
           {inner}
         </LinearGradient>
       ) : (
-        <View className={variant === 'glass' ? 'border border-white/10 bg-white/[0.06]' : ''}>{inner}</View>
+        <View className={variant === 'glass' ? 'border border-glass-border/10 bg-glass/[0.06]' : ''}>{inner}</View>
       )}
     </AnimatedPressable>
   );

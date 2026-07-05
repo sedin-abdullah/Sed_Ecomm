@@ -13,6 +13,8 @@ import { useProduct, useRelatedProducts } from '@/hooks/useProducts';
 import { useAddToCart } from '@/hooks/useCart';
 import { useAddToWishlist } from '@/hooks/useWishlist';
 import { useAuthStore } from '@/store/authStore';
+import { useUiStore } from '@/store/uiStore';
+import { useThemeColors } from '@/hooks/useThemeColors';
 import { useProductI18n } from '@/i18n/productI18n';
 import { getApiErrorMessage } from '@/services/api';
 import { formatPrice } from '@/utils/format';
@@ -29,6 +31,8 @@ export function ProductDetailScreen() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'ProductDetail'>>();
   const pi = useProductI18n();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const cartCount = useUiStore((s) => s.cartCount);
+  const tc = useThemeColors();
   const { data: product, isLoading } = useProduct(params.slug);
   const related = useRelatedProducts(product?.id);
   const addToCart = useAddToCart();
@@ -61,22 +65,35 @@ export function ProductDetailScreen() {
   return (
     <GradientBackground>
       <View style={{ paddingTop: insets.top }} className="flex-row items-center justify-between px-4 py-2">
-        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-white/10 bg-white/[0.06] p-2">
-          <Ionicons name="chevron-back" size={20} color="#fff" />
+        <Pressable onPress={() => nav.goBack()} className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2">
+          <Ionicons name="chevron-back" size={20} color={tc.foreground} />
         </Pressable>
-        <Pressable
-          onPress={() =>
-            requireAuth(() =>
-              addToWishlist.mutate(product.id, {
-                onSuccess: ({ alreadyExists }) =>
-                  Alert.alert(alreadyExists ? 'Already in wishlist' : 'Added to wishlist ❤️'),
-              }),
-            )
-          }
-          className="rounded-full border border-white/10 bg-white/[0.06] p-2"
-        >
-          <Ionicons name="heart-outline" size={20} color="#fff" />
-        </Pressable>
+        <View className="flex-row items-center gap-2">
+          <Pressable
+            onPress={() =>
+              requireAuth(() =>
+                addToWishlist.mutate(product.id, {
+                  onSuccess: ({ alreadyExists }) =>
+                    Alert.alert(alreadyExists ? 'Already in wishlist' : 'Added to wishlist ❤️'),
+                }),
+              )
+            }
+            className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2"
+          >
+            <Ionicons name="heart-outline" size={20} color={tc.foreground} />
+          </Pressable>
+          <Pressable
+            onPress={() => nav.navigate('MainTabs', { screen: 'Cart' } as never)}
+            className="rounded-full border border-glass-border/10 bg-glass/[0.06] p-2"
+          >
+            <Ionicons name="bag-outline" size={20} color={tc.foreground} />
+            {cartCount > 0 && (
+              <View className="absolute -right-1 -top-1 h-5 w-5 items-center justify-center rounded-full bg-brand-500">
+                <Text className="text-[10px] font-bold text-white">{cartCount}</Text>
+              </View>
+            )}
+          </Pressable>
+        </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
@@ -128,7 +145,7 @@ export function ProductDetailScreen() {
                   <Pressable
                     key={s}
                     onPress={() => setSize((cur) => (cur === s ? undefined : s))}
-                    className={`rounded-xl border px-4 py-2 ${size === s ? 'border-brand-500 bg-brand-500/20' : 'border-white/10'}`}
+                    className={`rounded-xl border px-4 py-2 ${size === s ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10'}`}
                   >
                     <Text className={size === s ? 'text-brand-400' : 'text-secondary'}>{s}</Text>
                   </Pressable>
@@ -146,7 +163,7 @@ export function ProductDetailScreen() {
                   <Pressable
                     key={c}
                     onPress={() => setColor((cur) => (cur === c ? undefined : c))}
-                    className={`rounded-xl border px-4 py-2 ${color === c ? 'border-brand-500 bg-brand-500/20' : 'border-white/10'}`}
+                    className={`rounded-xl border px-4 py-2 ${color === c ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10'}`}
                   >
                     <Text className={color === c ? 'text-brand-400' : 'text-secondary'}>{c}</Text>
                   </Pressable>
@@ -174,7 +191,7 @@ export function ProductDetailScreen() {
       </ScrollView>
 
       {/* Sticky add-to-cart bar */}
-      <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-surface/95 px-4 pt-3">
+      <View style={{ paddingBottom: insets.bottom + 8 }} className="absolute bottom-0 left-0 right-0 border-t border-glass-border/10 bg-surface/95 px-4 pt-3">
         <Button
           onPress={() =>
             requireAuth(() =>

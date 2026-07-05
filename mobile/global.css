@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Semantic color tokens — switched between light & dark by NativeWind's
+   class-based dark mode (see tailwind.config.js `darkMode: 'class'`).
+   Values are space-separated RGB channels so Tailwind can apply <alpha-value>. */
+:root {
+  --background: 248 250 252; /* slate-50 */
+  --surface: 255 255 255;
+  --surface-2: 241 245 249; /* slate-100 */
+  --border: 226 232 240; /* slate-200 */
+  --foreground: 15 23 42; /* slate-900 */
+  --muted-foreground: 100 116 139; /* slate-500 */
+  --secondary: 51 65 85; /* slate-700 */
+  --glass: 15 23 42; /* dark tint over light surfaces */
+  --glass-border: 15 23 42;
+}
+
+.dark:root {
+  --background: 3 7 18;
+  --surface: 17 24 39;
+  --surface-2: 17 24 39;
+  --border: 31 41 55;
+  --foreground: 255 255 255;
+  --muted-foreground: 148 163 184;
+  --secondary: 203 213 225;
+  --glass: 255 255 255;
+  --glass-border: 255 255 255;
+}

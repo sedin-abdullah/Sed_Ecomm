@@ -7,13 +7,14 @@ import { useTranslation } from 'react-i18next';
 import { GradientBackground } from '@/components/GradientBackground';
 import { LoginPrompt } from '@/components/LoginPrompt';
 import { useAuthStore } from '@/store/authStore';
+import { useThemeStore } from '@/store/themeStore';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 
 function Item({ icon, label, onPress }: { icon: keyof typeof Ionicons.glyphMap; label: string; onPress: () => void }) {
   return (
-    <Pressable onPress={onPress} className="flex-row items-center gap-3 border-b border-white/5 py-4">
+    <Pressable onPress={onPress} className="flex-row items-center gap-3 border-b border-glass-border/5 py-4">
       <Ionicons name={icon} size={20} color={colors.muted} />
       <Text className="flex-1 text-foreground">{label}</Text>
       <Ionicons name="chevron-forward" size={18} color={colors.muted} />
@@ -26,6 +27,8 @@ export function ProfileScreen() {
   const { t, i18n } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { user, isAuthenticated, logout } = useAuthStore();
+  const theme = useThemeStore((s) => s.theme);
+  const setTheme = useThemeStore((s) => s.setTheme);
 
   if (!isAuthenticated) return <LoginPrompt message="Log in to view your profile" />;
 
@@ -42,10 +45,34 @@ export function ProfileScreen() {
           </View>
         </View>
 
-        <View className="rounded-3xl border border-white/10 bg-white/[0.06] px-4">
+        <View className="rounded-3xl border border-glass-border/10 bg-glass/[0.06] px-4">
           <Item icon="bag-outline" label={t('nav.orders')} onPress={() => nav.navigate('Orders' as never)} />
           <Item icon="heart-outline" label={t('nav.wishlist')} onPress={() => nav.navigate('MainTabs', { screen: 'Wishlist' } as never)} />
           <Item icon="bag-handle-outline" label={t('nav.cart')} onPress={() => nav.navigate('MainTabs', { screen: 'Cart' } as never)} />
+          {user?.role === 'admin' && (
+            <Item icon="shield-checkmark-outline" label="Admin Dashboard" onPress={() => nav.navigate('AdminDashboard')} />
+          )}
+        </View>
+
+        {/* Appearance (light / dark) */}
+        <Text className="mb-2 mt-6 font-semibold text-foreground">Appearance</Text>
+        <View className="flex-row gap-2">
+          {([
+            { key: 'light', label: 'Light', icon: 'sunny-outline' },
+            { key: 'dark', label: 'Dark', icon: 'moon-outline' },
+          ] as const).map((opt) => {
+            const active = theme === opt.key;
+            return (
+              <Pressable
+                key={opt.key}
+                onPress={() => setTheme(opt.key)}
+                className={`flex-1 flex-row items-center justify-center gap-2 rounded-2xl border py-3 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10 bg-glass/[0.06]'}`}
+              >
+                <Ionicons name={opt.icon} size={18} color={active ? colors.brand : colors.muted} />
+                <Text className={active ? 'font-semibold text-brand-400' : 'text-secondary'}>{opt.label}</Text>
+              </Pressable>
+            );
+          })}
         </View>
 
         {/* Language switcher */}
@@ -57,7 +84,7 @@ export function ProfileScreen() {
               <Pressable
                 key={l.code}
                 onPress={() => i18n.changeLanguage(l.code)}
-                className={`rounded-full border px-4 py-2 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-white/10 bg-white/[0.06]'}`}
+                className={`rounded-full border px-4 py-2 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10 bg-glass/[0.06]'}`}
               >
                 <Text className={active ? 'text-brand-400' : 'text-secondary'}>{l.label}</Text>
               </Pressable>

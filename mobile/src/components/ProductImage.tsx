@@ -10,7 +10,7 @@ export function ProductImage({ uri, style, className }: { uri?: string; style?: 
   const [failed, setFailed] = useState(false);
   if (!uri || failed) {
     return (
-      <View className={`items-center justify-center bg-white/5 ${className ?? ''}`} style={style as never}>
+      <View className={`items-center justify-center bg-glass/5 ${className ?? ''}`} style={style as never}>
         <Text className="text-xs text-muted-foreground">No image</Text>
       </View>
     );

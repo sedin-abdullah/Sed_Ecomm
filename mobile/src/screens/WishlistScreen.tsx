@@ -47,7 +47,7 @@ export function WishlistScreen() {
             renderItem={({ item }) => {
               const out = item.stock <= 0;
               return (
-                <View className="flex-row gap-3 rounded-3xl border border-white/10 bg-white/[0.06] p-3">
+                <View className="flex-row gap-3 rounded-3xl border border-glass-border/10 bg-glass/[0.06] p-3">
                   <Pressable onPress={() => nav.navigate('ProductDetail', { slug: item.slug })}>
                     <ProductImage uri={item.images?.[0]?.url} className="h-20 w-20 rounded-2xl" style={{ width: 80, height: 80, borderRadius: 16 }} />
                   </Pressable>
@@ -63,7 +63,7 @@ export function WishlistScreen() {
                         onPress={() =>
                           addToCart.mutate({ productId: item.id, qty: 1 }, { onSuccess: () => removeFromWishlist.mutate(item.id) })
                         }
-                        className={`rounded-full px-4 py-1.5 ${out ? 'bg-white/5' : 'bg-brand-500'}`}
+                        className={`rounded-full px-4 py-1.5 ${out ? 'bg-glass/5' : 'bg-brand-500'}`}
                       >
                         <Text className="text-xs font-semibold text-white">Move to cart</Text>
                       </Pressable>
