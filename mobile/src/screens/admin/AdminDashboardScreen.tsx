@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { GradientBackground } from '@/components/GradientBackground';
-import { useThemeColors } from '@/hooks/useThemeColors';
+import { useAuthStore } from '@/store/authStore';
 import { GlassCard } from '@/components/GlassCard';
 import { ProductImage } from '@/components/ProductImage';
 import { useDashboardSummary, useBestSellers } from '@/hooks/useAdmin';
@@ -32,7 +32,7 @@ const LINKS: { label: string; icon: keyof typeof Ionicons.glyphMap; route: keyof
 export function AdminDashboardScreen() {
   const insets = useSafeAreaInsets();
   const formatPrice = usePrice();
-  const tc = useThemeColors();
+  const logout = useAuthStore((s) => s.logout);
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: s, isLoading } = useDashboardSummary();
   const { data: best } = useBestSellers();
@@ -40,11 +40,15 @@ export function AdminDashboardScreen() {
   return (
     <GradientBackground>
       <ScrollView style={{ paddingTop: insets.top + 8 }} contentContainerStyle={{ padding: 16, paddingBottom: 40 }}>
-        <View className="mb-4 flex-row items-center gap-2">
-          <Pressable onPress={() => nav.goBack()} className="h-10 w-10 items-center justify-center rounded-full bg-glass/[0.06]">
-            <Ionicons name="chevron-back" size={22} color={tc.foreground} />
-          </Pressable>
+        <View className="mb-4 flex-row items-center justify-between">
           <Text className="text-2xl font-bold text-foreground">Admin Dashboard</Text>
+          <Pressable
+            onPress={() => logout()}
+            className="flex-row items-center gap-1.5 rounded-full border border-sale/40 px-3 py-2"
+          >
+            <Ionicons name="log-out-outline" size={18} color={colors.sale} />
+            <Text className="text-sm font-semibold text-sale">Logout</Text>
+          </Pressable>
         </View>
 
         {isLoading ? (
