@@ -12,12 +12,13 @@ import { useWishlist, useRemoveFromWishlist } from '@/hooks/useWishlist';
 import { useAddToCart } from '@/hooks/useCart';
 import { useAuthStore } from '@/store/authStore';
 import { useProductI18n } from '@/i18n/productI18n';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 
 export function WishlistScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const { t } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const pi = useProductI18n();

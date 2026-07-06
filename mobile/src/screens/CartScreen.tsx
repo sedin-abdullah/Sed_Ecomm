@@ -19,7 +19,7 @@ import {
 import { useAddToWishlist } from '@/hooks/useWishlist';
 import { useAuthStore } from '@/store/authStore';
 import { useProductI18n } from '@/i18n/productI18n';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 import type { CartItem } from '@/types';
@@ -35,6 +35,7 @@ function Row({ label, value, accent }: { label: string; value: string; accent?: 
 
 export function CartScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const { t } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const pi = useProductI18n();

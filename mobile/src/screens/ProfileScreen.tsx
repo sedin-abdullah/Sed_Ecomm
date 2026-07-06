@@ -8,6 +8,7 @@ import { GradientBackground } from '@/components/GradientBackground';
 import { LoginPrompt } from '@/components/LoginPrompt';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
+import { useCurrencyStore, CURRENCIES, CURRENCY_SYMBOLS } from '@/store/currencyStore';
 import { SUPPORTED_LANGUAGES } from '@/i18n';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
@@ -29,6 +30,8 @@ export function ProfileScreen() {
   const { user, isAuthenticated, logout } = useAuthStore();
   const theme = useThemeStore((s) => s.theme);
   const setTheme = useThemeStore((s) => s.setTheme);
+  const currency = useCurrencyStore((s) => s.currency);
+  const setCurrency = useCurrencyStore((s) => s.setCurrency);
 
   if (!isAuthenticated) return <LoginPrompt message="Log in to view your profile" />;
 
@@ -87,6 +90,23 @@ export function ProfileScreen() {
                 className={`rounded-full border px-4 py-2 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10 bg-glass/[0.06]'}`}
               >
                 <Text className={active ? 'text-brand-400' : 'text-secondary'}>{l.label}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {/* Currency switcher */}
+        <Text className="mb-2 mt-6 font-semibold text-foreground">Currency</Text>
+        <View className="flex-row flex-wrap gap-2">
+          {CURRENCIES.map((c) => {
+            const active = currency === c;
+            return (
+              <Pressable
+                key={c}
+                onPress={() => setCurrency(c)}
+                className={`rounded-full border px-4 py-2 ${active ? 'border-brand-500 bg-brand-500/20' : 'border-glass-border/10 bg-glass/[0.06]'}`}
+              >
+                <Text className={active ? 'text-brand-400' : 'text-secondary'}>{CURRENCY_SYMBOLS[c].trim()} {c}</Text>
               </Pressable>
             );
           })}

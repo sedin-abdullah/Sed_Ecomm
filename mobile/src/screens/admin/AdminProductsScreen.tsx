@@ -13,7 +13,7 @@ import { Button } from '@/components/Button';
 import { useAdminProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from '@/hooks/useAdmin';
 import { useCategories } from '@/hooks/useProducts';
 import { getApiErrorMessage } from '@/services/api';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { Category, Product } from '@/types';
 import type { RootStackParamList } from '@/navigation/types';
@@ -31,6 +31,7 @@ const categoryIdOf = (p: Product) => (typeof p.category === 'string' ? p.categor
 
 export function AdminProductsScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: products, isLoading } = useAdminProducts();

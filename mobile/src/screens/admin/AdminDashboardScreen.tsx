@@ -9,7 +9,7 @@ import { GlassCard } from '@/components/GlassCard';
 import { ProductImage } from '@/components/ProductImage';
 import { useDashboardSummary, useBestSellers } from '@/hooks/useAdmin';
 import type { BestSeller } from '@/services/admin';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -31,6 +31,7 @@ const LINKS: { label: string; icon: keyof typeof Ionicons.glyphMap; route: keyof
 
 export function AdminDashboardScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: s, isLoading } = useDashboardSummary();

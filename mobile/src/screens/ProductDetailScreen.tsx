@@ -17,7 +17,7 @@ import { useUiStore } from '@/store/uiStore';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { useProductI18n } from '@/i18n/productI18n';
 import { getApiErrorMessage } from '@/services/api';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 import type { ProductImage as ProductImageType } from '@/types';
@@ -26,6 +26,7 @@ const { width } = Dimensions.get('window');
 
 export function ProductDetailScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const { t } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { params } = useRoute<RouteProp<RootStackParamList, 'ProductDetail'>>();

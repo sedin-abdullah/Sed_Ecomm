@@ -11,6 +11,7 @@ import i18n from '@/i18n';
 import { queryClient } from '@/store/queryClient';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
+import { useCurrencyStore } from '@/store/currencyStore';
 import { RootNavigator } from '@/navigation/RootNavigator';
 import { registerForPushNotifications } from '@/services/notifications';
 import { colors, lightColors } from '@/constants/theme';
@@ -38,16 +39,21 @@ export default function App() {
   const hydrateTheme = useThemeStore((s) => s.hydrate);
   const themeHydrated = useThemeStore((s) => s.hydrated);
   const theme = useThemeStore((s) => s.theme);
+  const hydrateCurrency = useCurrencyStore((s) => s.hydrate);
+  const currencyHydrated = useCurrencyStore((s) => s.hydrated);
+  const fetchRates = useCurrencyStore((s) => s.fetchRates);
   const isDark = theme === 'dark';
   const palette = isDark ? colors : lightColors;
 
   useEffect(() => {
     void hydrateTheme();
+    void hydrateCurrency();
+    void fetchRates();
     void hydrateAuth();
     void registerForPushNotifications();
-  }, [hydrateAuth, hydrateTheme]);
+  }, [hydrateAuth, hydrateTheme, hydrateCurrency, fetchRates]);
 
-  const ready = authHydrated && themeHydrated;
+  const ready = authHydrated && themeHydrated && currencyHydrated;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

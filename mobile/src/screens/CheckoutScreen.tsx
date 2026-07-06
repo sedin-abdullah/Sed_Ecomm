@@ -10,7 +10,7 @@ import { TextField } from '@/components/TextField';
 import { Button } from '@/components/Button';
 import { useAddresses, useAddAddress } from '@/hooks/useOrders';
 import { useCart } from '@/hooks/useCart';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 import type { Address } from '@/types';
@@ -19,6 +19,7 @@ const EMPTY = { fullName: '', phone: '', line1: '', city: '', state: '', postalC
 
 export function CheckoutScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: addresses, isLoading } = useAddresses();

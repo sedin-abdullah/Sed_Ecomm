@@ -145,6 +145,9 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
+  // Admin listing populates the customer + address; absent on a user's own orders.
+  user?: { id?: string; name?: string; email?: string };
+  shippingAddress?: Address;
   items: OrderItem[];
   status: OrderStatus;
   paymentMethod: string;

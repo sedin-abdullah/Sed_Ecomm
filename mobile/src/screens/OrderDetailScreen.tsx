@@ -8,13 +8,14 @@ import { ProductImage } from '@/components/ProductImage';
 import { Button } from '@/components/Button';
 import { useOrder, useOrderTracking, useCancelOrder } from '@/hooks/useOrders';
 import { useProductI18n } from '@/i18n/productI18n';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 import type { OrderItem } from '@/types';
 
 export function OrderDetailScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const tc = useThemeColors();
   const nav = useNavigation();
   const { params } = useRoute<RouteProp<RootStackParamList, 'OrderDetail'>>();

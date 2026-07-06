@@ -9,7 +9,7 @@ import type { Product } from '@/types';
 import type { RootStackParamList } from '@/navigation/types';
 import { ProductImage } from './ProductImage';
 import { useProductI18n } from '@/i18n/productI18n';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { gradients } from '@/constants/theme';
 
 function useCountdown() {
@@ -28,6 +28,7 @@ function useCountdown() {
 }
 
 function FlashCard({ product }: { product: Product }) {
+  const formatPrice = usePrice();
   const pi = useProductI18n();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const price = product.discountPrice ?? product.price;

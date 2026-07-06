@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { GradientBackground } from '@/components/GradientBackground';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { useOrders } from '@/hooks/useOrders';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 import { colors } from '@/constants/theme';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -22,6 +22,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 export function OrdersScreen() {
   const insets = useSafeAreaInsets();
+  const formatPrice = usePrice();
   const tc = useThemeColors();
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data: orders, isLoading } = useOrders();

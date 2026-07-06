@@ -3,7 +3,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import type { Product } from '@/types';
 import { ProductImage } from './ProductImage';
 import { useProductI18n } from '@/i18n/productI18n';
-import { formatPrice } from '@/utils/format';
+import { usePrice } from '@/hooks/usePrice';
 
 interface Props {
   product: Product;
@@ -14,6 +14,7 @@ interface Props {
 
 /** Premium product card: glass surface, image, price with discount, rating. */
 export function ProductCard({ product, onPress, index = 0, width }: Props) {
+  const formatPrice = usePrice();
   const pi = useProductI18n();
   const price = product.discountPrice ?? product.price;
   const hasDiscount = !!product.discountPrice;
