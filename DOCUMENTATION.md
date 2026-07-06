@@ -240,9 +240,28 @@ Prereq: `npm i -g eas-cli`, a free Expo account.
 
 ---
 
-## 11. API reference (base path `/api/v1`)
+## 11. API reference
 
-All responses are JSON: `{ success, data?, message?, errors? }`. Protected routes need `Authorization: Bearer <accessToken>`; admin routes also require an admin account.
+**Base URL** (prepend to every path below):
+
+| Environment | Base URL |
+|---|---|
+| **Production** | `https://sed-ecomm-server.onrender.com/api/v1` |
+| **Local** | `http://localhost:5001/api/v1` |
+
+So a login call is `POST https://sed-ecomm-server.onrender.com/api/v1/auth/login`.
+
+All responses are JSON: `{ success, data?, message?, errors? }`. Protected routes need the header `Authorization: Bearer <accessToken>` (get `accessToken` from the login/register response); admin routes also require an admin account.
+
+```bash
+# 1) Log in and grab the token
+curl -X POST https://sed-ecomm-server.onrender.com/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@sedecomm.com","password":"Admin@123"}'
+# 2) Call a protected route
+curl https://sed-ecomm-server.onrender.com/api/v1/auth/me \
+  -H "Authorization: Bearer <accessToken>"
+```
 
 ### Auth — `/auth`
 | Method | Path | Purpose |
@@ -265,7 +284,7 @@ All responses are JSON: `{ success, data?, message?, errors? }`. Protected route
 ### Products — `/products`
 | Method | Path | Purpose |
 |---|---|---|
-| GET | `/products` | List (filters: `category, minPrice, maxPrice, rating, brand, size, color, inStock, onSale, sort, search, page, limit`) |
+| GET | `/products` | List (filters: `category, minPrice, maxPrice, rating, brand, size, color, inStock, onSale, flashSale, featured, newArrival, bestSeller, sort, search, page, limit`) |
 | GET | `/products/facets` | Distinct brands/sizes/colors for filters |
 | GET | `/products/search/suggest?q=` | Search suggestions |
 | GET | `/products/:slug` | Product detail |
@@ -295,7 +314,7 @@ All responses are JSON: `{ success, data?, message?, errors? }`. Protected route
 ### Orders — `/orders`
 | Method | Path | Purpose |
 |---|---|---|
-| POST | `/orders` | Place order `{ addressId, couponCode?, paymentMethod }` |
+| POST | `/orders` | Place order `{ items: [{ product, qty, variant? }], shippingAddress, couponCode?, paymentMethod }` |
 | GET | `/orders` | Order history |
 | GET | `/orders/:id` | Order detail |
 | GET | `/orders/:id/track` | Status timeline |
@@ -306,7 +325,7 @@ All responses are JSON: `{ success, data?, message?, errors? }`. Protected route
 `POST /payments/initiate` `{ orderId, method, details }` → `{ paymentId, requiresOtp }`; `POST /payments/verify` `{ paymentId, otp }`. Methods: `card_credit, card_debit, upi, netbanking, wallet, cod`. Demo OTP: **123456**. Any card number is accepted (dummy gateway).
 
 ### Admin — `/admin`
-`GET /admin/dashboard/summary`, `GET /admin/dashboard/best-sellers`, `GET /admin/orders`, `PATCH /admin/orders/:id/status`, `GET /admin/customers`.
+`GET /admin/dashboard/summary`, `GET /admin/dashboard/best-sellers`, `GET /admin/orders`, `PATCH /admin/orders/:id/status` `{ status, note? }`, `GET /admin/customers`, `GET /admin/customers/:id`, `PATCH /admin/customers/:id/role`.
 
 ### Meta / health
 `GET /api/v1/health`, `GET /meta/currency-rates`, `GET /meta/countries`.
